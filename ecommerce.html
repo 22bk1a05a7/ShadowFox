@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Enhancement</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        .container { max-width: 1200px; margin: auto; padding: 20px; }
+        .filter-sort { display: flex; justify-content: space-between; padding: 10px; background: #f4f4f4; }
+        .product-list { display: flex; flex-wrap: wrap; gap: 20px; }
+        .product { border: 1px solid #ddd; padding: 10px; width: 30%; }
+        .checkout { margin-top: 20px; padding: 10px; background: #ddd; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enhanced E-commerce Platform</h2>
+        <div class="filter-sort">
+            <select id="sort" onchange="sortProducts()">
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+            </select>
+            <input type="text" id="search" placeholder="Search products..." onkeyup="filterProducts()">
+        </div>
+        <div class="product-list" id="product-list">
+            <div class="product" data-price="20">Product A - $20</div>
+            <div class="product" data-price="50">Product B - $50</div>
+            <div class="product" data-price="30">Product C - $30</div>
+        </div>
+        <div class="checkout">
+            <button onclick="checkout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <script>
+        function sortProducts() {
+            let products = [...document.querySelectorAll('.product')];
+            let sortType = document.getElementById("sort").value;
+            products.sort((a, b) => {
+                let priceA = parseFloat(a.getAttribute("data-price"));
+                let priceB = parseFloat(b.getAttribute("data-price"));
+                return sortType === "price-asc" ? priceA - priceB : priceB - priceA;
+            });
+            document.getElementById("product-list").innerHTML = "";
+            products.forEach(product => document.getElementById("product-list").appendChild(product));
+        }
+
+        function filterProducts() {
+            let searchQuery = document.getElementById("search").value.toLowerCase();
+            document.querySelectorAll(".product").forEach(product => {
+                product.style.display = product.textContent.toLowerCase().includes(searchQuery) ? "block" : "none";
+            });
+        }
+
+        function checkout() {
+            alert("Proceeding to checkout...");
+        }
+    </script>
+</body>
+</html>
